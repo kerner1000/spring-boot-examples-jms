@@ -6,11 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.core.JmsTemplate;
 
 @Data
 @EnableJms
 @Configuration
-@ConfigurationProperties(prefix = "messaging.in")
+@ConfigurationProperties(prefix = "messaging")
 public class MqConfig {
 
     String host;
@@ -25,5 +26,12 @@ public class MqConfig {
         connectionFactory.setPassword(password);
         connectionFactory.setUserName(user);
         return connectionFactory;
+    }
+
+    @Bean
+    public JmsTemplate jmsTemplate(){
+        JmsTemplate jmsTemplate = new JmsTemplate();
+        jmsTemplate.setConnectionFactory(connectionFactory());
+        return jmsTemplate;
     }
 }
