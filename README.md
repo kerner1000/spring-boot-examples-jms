@@ -1,5 +1,7 @@
 # spring-boot-examples-jms
 
+## JMS ActiveMQ examples
+
 1. Start AvtiveMQ
 
    1. Local binary
