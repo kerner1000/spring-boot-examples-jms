@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 
+import javax.jms.ConnectionFactory;
+
 @Data
 @EnableJms
 @Configuration
@@ -19,7 +21,7 @@ public class MqConfig {
     String password;
 
     @Bean
-    public ActiveMQConnectionFactory connectionFactory(){
+    public ConnectionFactory connectionFactory(){
         ActiveMQConnectionFactory connectionFactory = new  ActiveMQConnectionFactory();
         connectionFactory.setTrustAllPackages(true);
         connectionFactory.setBrokerURL(host);
@@ -29,9 +31,18 @@ public class MqConfig {
     }
 
     @Bean
-    public JmsTemplate jmsTemplate(){
+    public JmsTemplate defaultJmsTemplate(){
         JmsTemplate jmsTemplate = new JmsTemplate();
         jmsTemplate.setConnectionFactory(connectionFactory());
         return jmsTemplate;
     }
+
+//    @Bean
+//    public JmsTemplate delayingJmsTemplate(){
+//        JmsTemplate jmsTemplate = new JmsTemplate();
+//        // Throws error does not define or inherit an implementation of the resolved method 'abstract void setDeliveryDelay(long)
+//        jmsTemplate.setDeliveryDelay(1000);
+//        jmsTemplate.setConnectionFactory(connectionFactory());
+//        return jmsTemplate;
+//    }
 }

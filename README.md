@@ -20,3 +20,7 @@
    c.g.k.s.b.examples.jms.MessageReceiver   : Received message ActiveMQTextMessage {commandId = 6, responseRequired = false, messageId = ID:xxx, originalDestination = null, originalTransactionId = null, producerId = ID:xxx, destination = queue://testQueue, transactionId = null, expiration = 0, timestamp = 000, arrival = 0, brokerInTime = 000, brokerOutTime = 000, correlationId = , replyTo = null, persistent = false, type = , priority = 0, groupID = null, groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content = org.apache.activemq.util.ByteSequence@37e1ee79, marshalledProperties = null, dataStructure = null, redeliveryCounter = 0, size = 0, properties = null, readOnlyProperties = true, readOnlyBody = true, droppable = false, jmsXGroupFirstForConsumer = false, text = test2}
    ```
 
+For delayed scheduling, AvtiveMQ config needs to be adjusted:
+```
+<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" schedulerSupport="true">
+```

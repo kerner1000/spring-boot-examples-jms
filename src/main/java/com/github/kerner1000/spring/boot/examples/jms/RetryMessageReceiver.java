@@ -13,19 +13,18 @@ import javax.jms.TextMessage;
 @AllArgsConstructor
 @Slf4j
 @Component
-public class MessageReceiver {
+public class RetryMessageReceiver {
 
-    private final JmsTemplate jmsTemplate;
+    private final JmsTemplate defaultJmsTemplate;
 
-    @JmsListener(destination = "testQueue")
+    @JmsListener(destination = "retryQueue")
     public void onMessage(Message message) throws JMSException {
-        log.info("Received message {}, sending response..", message);
         if(message instanceof TextMessage){
             TextMessage textMessage = (TextMessage) message;
-            jmsTemplate.convertAndSend("answerQueue", "Message received: " + textMessage.getText());
+            log.info("Received message {}", textMessage.getText());
+            defaultJmsTemplate.convertAndSend("answerQueue", "Answer message (After retry). " + textMessage.getText());
         } else {
             log.warn("Received unknown message type {}", message.getJMSType());
         }
-
     }
 }
